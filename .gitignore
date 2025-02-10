@@ -169,3 +169,19 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+.idea/
+*.iml
+
+# other
+*~
+*.swp
+*.bak
+test/
+output/
+*.zip
+Paddle*release*/
+data/
+predictions
+cache/
+
