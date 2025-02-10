@@ -34,6 +34,7 @@ RUN git clone https://github.com/PaddlePaddle/PaddleDetection.git && \
     pip install --no-cache-dir -v -e .
 
 COPY bash.bashrc /etc/bash.bashrc
+COPY paddledet_* /usr/bin/
 
 # paddlepaddle-gpu looks for: /usr/local/cuda/lib64/libcudnn.so
 RUN ln -s /opt/conda/lib/python3.11/site-packages/nvidia/cudnn/lib/libcudnn.so.9 /usr/local/cuda/lib64/libcudnn.so

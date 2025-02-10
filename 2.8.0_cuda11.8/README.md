@@ -123,18 +123,11 @@ docker run -u $(id -u):$(id -g) -e USER=$USER ...
 PaddleDetection will download pretrained models and cache them locally. To avoid having
 to download them constantly, you can the cache directory to the host machine:
 
-* when running the container as `root`
-
-  ```bash
-  -v /some/where/cache:/root/.torch \
-  -v /some/where/cache/iopath_cache:/tmp/iopath_cache \
-  ```
-
 * when running the container as current user
 
   ```bash
-  -v /some/where/cache:/.torch \
-  -v /some/where/cache/iopath_cache:/tmp/iopath_cache \
+  -v `pwd`/cache:/.paddledetection \
+  -v `pwd`/cache/visualdl:/.visualdl \
   ```
 
 
@@ -142,4 +135,7 @@ to download them constantly, you can the cache directory to the host machine:
 
 The following additional scripts are available:
 
-* `paddledetection_train` - for training models (calls the `/opt/PaddleDetection/tools/train.py` script)
+* `paddledet_train` - for training models (calls the `/opt/PaddleDetection/tools/train.py` script)
+* `paddledet_eval` - for evaluating trained models (calls the `/opt/PaddleDetection/tools/eval.py` script)
+* `paddledet_export_model` - for exporting trained models (calls the `/opt/PaddleDetection/tools/export_model.py` script)
+* `paddledet_infer` - for simple inference using a trained model (calls the `/opt/PaddleDetection/tools/infer.py` script)
