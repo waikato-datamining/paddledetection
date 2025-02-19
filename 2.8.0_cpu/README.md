@@ -37,13 +37,13 @@ Uses PyTorch 2.5.1, CPU and PaddleDetection 2.8.0.
 * Build the image from Docker file (from within /path_to/paddledetection/2.8.0_cpu)
 
   ```bash
-  docker build -t paddledetection .
+  docker build -t paddledetection_cpu .
   ```
   
 * Run the container
 
   ```bash
-  docker run --shm-size 8G --net=host -v /local/dir:/container/dir -it paddledetection
+  docker run --shm-size 8G --net=host -v /local/dir:/container/dir -it paddledetection_cpu
   ```
   `/local/dir:/container/dir` maps a local disk directory into a directory inside the container
 
