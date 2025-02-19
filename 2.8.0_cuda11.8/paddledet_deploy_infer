@@ -1,0 +1,3 @@
+#!/bin/bash
+
+python3 /opt/PaddleDetection/deploy/python/infer.py "$@"

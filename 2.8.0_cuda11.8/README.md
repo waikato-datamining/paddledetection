@@ -139,3 +139,6 @@ The following additional scripts are available:
 * `paddledet_eval` - for evaluating trained models (calls the `/opt/PaddleDetection/tools/eval.py` script)
 * `paddledet_export_model` - for exporting trained models (calls the `/opt/PaddleDetection/tools/export_model.py` script)
 * `paddledet_infer` - for simple inference using a trained model (calls the `/opt/PaddleDetection/tools/infer.py` script)
+* `paddledet_deploy_infer` - for simple inference using a trained model (calls the `/opt/PaddleDetection/deploy/python/infer.py` script)
+* `paddledet_predict_poll` - generates predictions in OPEX format using file-polling (calls the `/opt/PaddleDetection/tools/predict_poll.py` script)
+* `paddledet_predict_redis` - generates predictions in OPEX format via Redis (calls the `/opt/PaddleDetection/tools/predict_poll.py` script)
