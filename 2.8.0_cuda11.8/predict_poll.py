@@ -134,7 +134,7 @@ if __name__ == '__main__':
 
         # Performing the prediction and producing the predictions files
         predict_on_images(detector, parsed.prediction_in, parsed.prediction_out, parsed.prediction_tmp,
-                          labels=parsed.labels, threshold=parsed.threshold, continuous=parsed.continuous,
+                          labels=labels, threshold=parsed.threshold, continuous=parsed.continuous,
                           use_watchdog=parsed.use_watchdog, watchdog_check_interval=parsed.watchdog_check_interval,
                           delete_input=parsed.delete_input, verbose=parsed.verbose, quiet=parsed.quiet)
 
