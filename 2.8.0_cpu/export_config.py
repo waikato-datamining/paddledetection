@@ -278,6 +278,7 @@ def export(input_file: str, output_file: str, train_annotations: str = None, val
     config = load_config(input_file)
 
     set_value(config, ["metric"], "COCO")
+    set_value(config, ["use_gpu"], "false")
 
     if train_annotations is not None:
         set_value(config, ["TrainDataset", "name"], "COCODataSet")
