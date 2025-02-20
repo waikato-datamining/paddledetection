@@ -1,6 +1,7 @@
 import os
 import yaml
 from datetime import datetime
+from typing import List
 
 import paddle
 from deploy.python.infer import Detector, DetectorSOLOv2, DetectorPicoDet, DetectorCLRNet
@@ -52,8 +53,7 @@ def load_label_list(path: str) -> List[str]:
     :rtype: list
     """
     with open(path, "r") as fp:
-        result = fp.readlines()
-    result = [x.strip() for x in result]
+        result = fp.readline().strip().split(",")
     return result
 
 
