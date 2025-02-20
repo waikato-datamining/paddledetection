@@ -4,7 +4,7 @@ import traceback
 import cv2
 
 from rdh import Container, MessageContainer, create_parser, configure_redis, run_harness, log
-from predict_common import load_model, prediction_to_data
+from predict_common import load_model, load_label_list, prediction_to_data
 
 
 def process_image(msg_cont):
@@ -22,7 +22,8 @@ def process_image(msg_cont):
         array = np.frombuffer(msg_cont.message['data'], np.uint8)
         img = cv2.imdecode(array, cv2.IMREAD_COLOR)
         preds = config.detector.predict_image([img], visual=False)
-        out_data = prediction_to_data(preds, config.detector.pred_config.labels, str(start_time), config.threshold)
+        labels = config.detector.labels if (config.labels is None) else config.labels
+        out_data = prediction_to_data(preds, labels, str(start_time), config.threshold)
         msg_cont.params.redis.publish(msg_cont.params.channel_out, out_data)
 
         if config.verbose:
@@ -41,6 +42,7 @@ def process_image(msg_cont):
 if __name__ == '__main__':
     parser = create_parser('PaddleDetection - Prediction (Redis)', prog="paddledet_predict_redis", prefix="redis_")
     parser.add_argument('--model_path', help='Path to the exported inference model', required=True, default=None)
+    parser.add_argument('--label_list', help='Path to the file with the comma-separated list of labels to override model-internal ones', required=False, default=None)
     parser.add_argument('--device', help='The device to use', default="gpu")
     parser.add_argument('--threshold', help='The score threshold for predictions', required=False, default=0.5)
     parser.add_argument('--verbose', action='store_true', help='Whether to output more logging info', required=False, default=False)
@@ -48,9 +50,11 @@ if __name__ == '__main__':
 
     try:
         detector = load_model(parsed.model_path, device=parsed.device.upper(), threshold=parsed.threshold)
+        labels = None if (parsed.label_list is None) else load_label_list(parsed.label_list)
 
         config = Container()
         config.detector = detector
+        config.labels = labels
         config.threshold = parsed.threshold
         config.verbose = parsed.verbose
 

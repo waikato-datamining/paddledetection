@@ -42,6 +42,21 @@ def load_model(model_path: str, device: str = "cpu", threshold: float = 0.5) -> 
     return detector
 
 
+def load_label_list(path: str) -> List[str]:
+    """
+    Loads the comma-separated list of labels from the specified path.
+
+    :param path: the file with the label list
+    :type path: str
+    :return: the list of labels
+    :rtype: list
+    """
+    with open(path, "r") as fp:
+        result = fp.readlines()
+    result = [x.strip() for x in result]
+    return result
+
+
 def prediction_to_file(predictions, labels, id_: str, path: str, threshold: float = 0.5) -> str:
     """
     Saves the predictions as OPEX in the specified file. 

@@ -2,10 +2,9 @@ import os
 import argparse
 import traceback
 
-import paddle
 from image_complete import auto
 from sfp import Poller
-from predict_common import load_model, prediction_to_file
+from predict_common import load_model, load_label_list, prediction_to_file
 
 SUPPORTED_EXTS = [".jpg", ".jpeg", ".png", ".bmp"]
 """ supported file extensions (lower case). """
@@ -47,7 +46,8 @@ def process_image(fname, output_dir, poller):
         img = cv2.imread(fname, 1)
         preds = poller.params.detector.predict_image([img], visual=False)
         fname_out = os.path.join(output_dir, os.path.splitext(os.path.basename(fname))[0] + ".json")
-        fname_out = prediction_to_file(preds, poller.params.detector.pred_config.labels, os.path.basename(fname), fname_out, threshold=poller.params.threshold)
+        labels = poller.params.detector.labels if (poller.params.labels is None) else poller.params.labels
+        fname_out = prediction_to_file(preds, labels, os.path.basename(fname), fname_out, threshold=poller.params.threshold)
         result.append(fname_out)
     except KeyboardInterrupt:
         poller.keyboard_interrupt()
@@ -56,7 +56,7 @@ def process_image(fname, output_dir, poller):
     return result
 
 
-def predict_on_images(detector, input_dir, output_dir, tmp_dir, threshold=0.5,
+def predict_on_images(detector, input_dir, output_dir, tmp_dir, labels=None, threshold=0.5,
                       poll_wait=1.0, continuous=False, use_watchdog=False, watchdog_check_interval=10.0,
                       delete_input=False, verbose=False, quiet=False):
     """
@@ -70,6 +70,8 @@ def predict_on_images(detector, input_dir, output_dir, tmp_dir, threshold=0.5,
     :type output_dir: str
     :param tmp_dir: the temporary directory to store the predictions until finished, use None if not to use
     :type tmp_dir: str
+    :param labels: the list of labels to use for overriding the model internal ones, ignore if None
+    :type labels: list or None
     :param threshold: the score threshold to use
     :type threshold: float
     :param poll_wait: the amount of seconds between polls when not in watchdog mode
@@ -103,6 +105,7 @@ def predict_on_images(detector, input_dir, output_dir, tmp_dir, threshold=0.5,
     poller.use_watchdog = use_watchdog
     poller.watchdog_check_interval = watchdog_check_interval
     poller.params.detector = detector
+    poller.params.labels = labels
     poller.params.threshold = threshold
     poller.poll()
 
@@ -110,6 +113,7 @@ def predict_on_images(detector, input_dir, output_dir, tmp_dir, threshold=0.5,
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="PaddleDetection - Prediction", prog="paddledet_predict_poll", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--model_path', help='Path to the exported inference model', required=True, default=None)
+    parser.add_argument('--label_list', help='Path to the file with the comma-separated list of labels to override model-internal ones', required=False, default=None)
     parser.add_argument('--device', help='The device to use', default="gpu")
     parser.add_argument('--threshold', help='The score threshold for predictions', required=False, default=0.5)
     parser.add_argument('--prediction_in', help='Path to the test images', required=True, default=None)
@@ -126,10 +130,11 @@ if __name__ == '__main__':
 
     try:
         detector = load_model(parsed.model_path, device=parsed.device.upper(), threshold=parsed.threshold)
+        labels = None if (parsed.label_list is None) else load_label_list(parsed.label_list)
 
         # Performing the prediction and producing the predictions files
         predict_on_images(detector, parsed.prediction_in, parsed.prediction_out, parsed.prediction_tmp,
-                          threshold=parsed.threshold, continuous=parsed.continuous,
+                          labels=parsed.labels, threshold=parsed.threshold, continuous=parsed.continuous,
                           use_watchdog=parsed.use_watchdog, watchdog_check_interval=parsed.watchdog_check_interval,
                           delete_input=parsed.delete_input, verbose=parsed.verbose, quiet=parsed.quiet)
 

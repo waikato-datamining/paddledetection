@@ -1,6 +1,7 @@
 import os
 import yaml
 from datetime import datetime
+from typing import List
 
 import paddle
 from deploy.python.infer import Detector, DetectorSOLOv2, DetectorPicoDet, DetectorCLRNet
@@ -40,6 +41,21 @@ def load_model(model_path: str, device: str = "gpu", threshold: float = 0.5) -> 
     else:
         detector = Detector(model_path, device=device.upper(), threshold=threshold, use_fd_format=use_fd_format)
     return detector
+
+
+def load_label_list(path: str) -> List[str]:
+    """
+    Loads the comma-separated list of labels from the specified path.
+
+    :param path: the file with the label list
+    :type path: str
+    :return: the list of labels
+    :rtype: list
+    """
+    with open(path, "r") as fp:
+        result = fp.readlines()
+    result = [x.strip() for x in result]
+    return result
 
 
 def prediction_to_file(predictions, labels, id_: str, path: str, threshold: float = 0.5) -> str:
