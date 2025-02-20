@@ -135,6 +135,7 @@ to download them constantly, you can the cache directory to the host machine:
 
 The following additional scripts are available:
 
+* `paddledet_export_config` - for training models (calls the `/opt/PaddleDetection/tools/export_config.py` script)
 * `paddledet_train` - for training models (calls the `/opt/PaddleDetection/tools/train.py` script)
 * `paddledet_eval` - for evaluating trained models (calls the `/opt/PaddleDetection/tools/eval.py` script)
 * `paddledet_export_model` - for exporting trained models (calls the `/opt/PaddleDetection/tools/export_model.py` script)

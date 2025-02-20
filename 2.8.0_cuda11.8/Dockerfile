@@ -38,6 +38,7 @@ RUN pip install --no-cache-dir \
 
 COPY bash.bashrc /etc/bash.bashrc
 COPY paddledet_* /usr/bin/
+COPY export_config.py /opt/PaddleDetection/tools/
 COPY predict*.py /opt/PaddleDetection/tools/
 RUN touch /opt/PaddleDetection/deploy/__init__.py
 RUN touch /opt/PaddleDetection/deploy/python/__init__.py
