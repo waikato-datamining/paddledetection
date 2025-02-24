@@ -114,7 +114,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="PaddleDetection - Prediction", prog="paddledet_predict_poll", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--model_path', help='Path to the exported inference model', required=True, default=None)
     parser.add_argument('--label_list', help='Path to the file with the comma-separated list of labels to override model-internal ones', required=False, default=None)
-    parser.add_argument('--threshold', help='The score threshold for predictions', required=False, default=0.5)
+    parser.add_argument('--threshold', type=float, help='The score threshold for predictions', required=False, default=0.5)
     parser.add_argument('--prediction_in', help='Path to the test images', required=True, default=None)
     parser.add_argument('--prediction_out', help='Path to the output csv files folder', required=True, default=None)
     parser.add_argument('--prediction_tmp', help='Path to the temporary csv files folder', required=False, default=None)

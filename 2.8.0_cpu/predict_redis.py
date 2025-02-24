@@ -43,7 +43,7 @@ if __name__ == '__main__':
     parser = create_parser('PaddleDetection - Prediction (Redis)', prog="paddledet_predict_redis", prefix="redis_")
     parser.add_argument('--model_path', help='Path to the exported inference model', required=True, default=None)
     parser.add_argument('--label_list', help='Path to the file with the comma-separated list of labels to override model-internal ones', required=False, default=None)
-    parser.add_argument('--threshold', help='The score threshold for predictions', required=False, default=0.5)
+    parser.add_argument('--threshold', type=float, help='The score threshold for predictions', required=False, default=0.5)
     parser.add_argument('--verbose', action='store_true', help='Whether to output more logging info', required=False, default=False)
     parsed = parser.parse_args()
 
