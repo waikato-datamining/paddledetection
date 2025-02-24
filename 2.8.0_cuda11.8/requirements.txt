@@ -136,6 +136,7 @@ scikit-image==0.25.1
 scikit-learn==1.6.1
 scipy==1.15.1
 shapely==2.0.7
+simple-mask-utils==0.0.1
 simple_file_poller==0.0.13
 six @ file:///home/conda/feedstock_root/build_artifacts/six_1620240208055/work
 sklearn==0.0
