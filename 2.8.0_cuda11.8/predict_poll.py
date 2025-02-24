@@ -47,7 +47,8 @@ def process_image(fname, output_dir, poller):
         preds = poller.params.detector.predict_image([img], visual=False)
         fname_out = os.path.join(output_dir, os.path.splitext(os.path.basename(fname))[0] + ".json")
         labels = poller.params.detector.labels if (poller.params.labels is None) else poller.params.labels
-        fname_out = prediction_to_file(preds, labels, os.path.basename(fname), fname_out, threshold=poller.params.threshold)
+        fname_out = prediction_to_file(preds, labels, os.path.basename(fname), fname_out,
+                                       threshold=poller.params.threshold, mask_nth=poller.params.mask_nth)
         result.append(fname_out)
     except KeyboardInterrupt:
         poller.keyboard_interrupt()
@@ -56,7 +57,7 @@ def process_image(fname, output_dir, poller):
     return result
 
 
-def predict_on_images(detector, input_dir, output_dir, tmp_dir, labels=None, threshold=0.5,
+def predict_on_images(detector, input_dir, output_dir, tmp_dir, labels=None, threshold=0.5, mask_nth: int = 1,
                       poll_wait=1.0, continuous=False, use_watchdog=False, watchdog_check_interval=10.0,
                       delete_input=False, verbose=False, quiet=False):
     """
@@ -74,6 +75,8 @@ def predict_on_images(detector, input_dir, output_dir, tmp_dir, labels=None, thr
     :type labels: list or None
     :param threshold: the score threshold to use
     :type threshold: float
+    :param mask_nth: to speed polygon detection up, use every nth row and column only (instance segmentation only)
+    :type mask_nth: int
     :param poll_wait: the amount of seconds between polls when not in watchdog mode
     :type poll_wait: float
     :param continuous: whether to poll continuously
@@ -107,6 +110,7 @@ def predict_on_images(detector, input_dir, output_dir, tmp_dir, labels=None, thr
     poller.params.detector = detector
     poller.params.labels = labels
     poller.params.threshold = threshold
+    poller.params.mask_nth = mask_nth
     poller.poll()
 
 
@@ -116,6 +120,7 @@ if __name__ == '__main__':
     parser.add_argument('--label_list', help='Path to the file with the comma-separated list of labels to override model-internal ones', required=False, default=None)
     parser.add_argument('--device', help='The device to use', default="gpu")
     parser.add_argument('--threshold', type=float, help='The score threshold for predictions', required=False, default=0.5)
+    parser.add_argument('--mask_nth', type=int, help='To speed polygon detection up, use every nth row and column only; use < 1 to turn off polygon calculation (instance segmentation only)', required=False, default=1)
     parser.add_argument('--prediction_in', help='Path to the test images', required=True, default=None)
     parser.add_argument('--prediction_out', help='Path to the output csv files folder', required=True, default=None)
     parser.add_argument('--prediction_tmp', help='Path to the temporary csv files folder', required=False, default=None)
@@ -134,7 +139,7 @@ if __name__ == '__main__':
 
         # Performing the prediction and producing the predictions files
         predict_on_images(detector, parsed.prediction_in, parsed.prediction_out, parsed.prediction_tmp,
-                          labels=labels, threshold=parsed.threshold, continuous=parsed.continuous,
+                          labels=labels, threshold=parsed.threshold, mask_nth=parsed.mask_nth, continuous=parsed.continuous,
                           use_watchdog=parsed.use_watchdog, watchdog_check_interval=parsed.watchdog_check_interval,
                           delete_input=parsed.delete_input, verbose=parsed.verbose, quiet=parsed.quiet)
 

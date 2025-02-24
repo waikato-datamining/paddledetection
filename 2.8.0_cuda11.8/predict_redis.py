@@ -23,7 +23,7 @@ def process_image(msg_cont):
         img = cv2.imdecode(array, cv2.IMREAD_COLOR)
         preds = config.detector.predict_image([img], visual=False)
         labels = config.detector.labels if (config.labels is None) else config.labels
-        out_data = prediction_to_data(preds, labels, str(start_time), config.threshold)
+        out_data = prediction_to_data(preds, labels, str(start_time), threshold=config.threshold, mask_nth=config.mask_nth)
         msg_cont.params.redis.publish(msg_cont.params.channel_out, out_data)
 
         if config.verbose:
@@ -45,6 +45,7 @@ if __name__ == '__main__':
     parser.add_argument('--label_list', help='Path to the file with the comma-separated list of labels to override model-internal ones', required=False, default=None)
     parser.add_argument('--device', help='The device to use', default="gpu")
     parser.add_argument('--threshold', type=float, help='The score threshold for predictions', required=False, default=0.5)
+    parser.add_argument('--mask_nth', type=int, help='To speed polygon detection up, use every nth row and column only; use < 1 to turn off polygon calculation (instance segmentation only)', required=False, default=1)
     parser.add_argument('--verbose', action='store_true', help='Whether to output more logging info', required=False, default=False)
     parsed = parser.parse_args()
 
@@ -56,6 +57,7 @@ if __name__ == '__main__':
         config.detector = detector
         config.labels = labels
         config.threshold = parsed.threshold
+        config.mask_nth = parsed.mask_nth
         config.verbose = parsed.verbose
 
         params = configure_redis(parsed, config=config)

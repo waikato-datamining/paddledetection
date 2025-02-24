@@ -6,6 +6,8 @@ from typing import List
 import paddle
 from deploy.python.infer import Detector, DetectorSOLOv2, DetectorPicoDet, DetectorCLRNet
 from opex import ObjectPredictions, ObjectPrediction, BBox, Polygon
+from smu import mask_to_polygon, polygon_to_lists
+from shapely.geometry import Polygon as SPolygon
 
 
 def load_model(model_path: str, device: str = "gpu", threshold: float = 0.5) -> Detector:
@@ -57,7 +59,7 @@ def load_label_list(path: str) -> List[str]:
     return result
 
 
-def prediction_to_file(predictions, labels, id_: str, path: str, threshold: float = 0.5) -> str:
+def prediction_to_file(predictions, labels, id_: str, path: str, threshold: float = 0.5, mask_nth: int = 1) -> str:
     """
     Saves the predictions as OPEX in the specified file. 
 
@@ -69,17 +71,19 @@ def prediction_to_file(predictions, labels, id_: str, path: str, threshold: floa
     :type path: str
     :param threshold: the minimum score for retaining predictions
     :type threshold: float
+    :param mask_nth: to speed polygon detection up, use every nth row and column only (instance segmentation only), use < 1 to turn off polygon calculation
+    :type mask_nth: int
     :return: the file the predictions were saved to
     :rtype: str
     """
-    data = prediction_to_data(predictions, labels, id_, threshold=threshold)
+    data = prediction_to_data(predictions, labels, id_, threshold=threshold, mask_nth=mask_nth)
     with open(path, "w") as fp:
         fp.write(data)
         fp.write("\n")
     return path
 
 
-def prediction_to_data(predictions, labels, id_: str, threshold: float = 0.5) -> str:
+def prediction_to_data(predictions, labels, id_: str, threshold: float = 0.5, mask_nth: int = 1) -> str:
     """
     Turns the predictions into an OPEX string.
 
@@ -89,11 +93,13 @@ def prediction_to_data(predictions, labels, id_: str, threshold: float = 0.5) ->
     :type id_: str
     :param threshold: the minimum score for retaining predictions
     :type threshold: float
+    :param mask_nth: to speed polygon detection up, use every nth row and column only (instance segmentation only), use < 1 to turn off polygon calculation
+    :type mask_nth: int
     :return: the generated predictions
     :rtype: str
     """
     pred_objs = []
-    for box in predictions['boxes']:
+    for i, box in enumerate(predictions['boxes']):
         score = float(box[1])
         if score < threshold:
             continue
@@ -103,7 +109,20 @@ def prediction_to_data(predictions, labels, id_: str, threshold: float = 0.5) ->
         xmax = int(box[4])
         ymax = int(box[5])
         bbox = BBox(left=xmin, top=ymin, right=xmax, bottom=ymax)
-        poly = Polygon(points=[(xmin, ymin), (xmax, ymin), (xmax, ymax), (xmin, ymax)])
+        points = [(xmin, ymin), (xmax, ymin), (xmax, ymax), (xmin, ymax)]
+        if ('masks' in predictions) and (mask_nth > 0):
+            mask = predictions['masks'][i]
+            polys = mask_to_polygon(mask, mask_nth=mask_nth)  # determine polygons
+            if len(polys) > 0:
+                # find largest polygon
+                area = 0.0
+                for poly in polys:
+                    px, py = polygon_to_lists(poly, swap_x_y=True, as_type="int")  # get coordinates
+                    area_curr = SPolygon(zip(px, py)).area
+                    if area_curr > area:
+                        area = area_curr
+                        points = [(x, y) for x, y in zip(px, py)]
+        poly = Polygon(points=points)
         label = labels[labelid]
         opex_obj = ObjectPrediction(label=label, score=score, bbox=bbox, polygon=poly)
         pred_objs.append(opex_obj)

@@ -33,7 +33,8 @@ RUN git clone https://github.com/PaddlePaddle/PaddleDetection.git && \
     pip install --no-cache-dir -v -e .
 
 RUN pip install --no-cache-dir \
-        numba==0.61.0 
+        numba==0.61.0 \
+        simple_mask_utils==0.0.1
 
 COPY bash.bashrc /etc/bash.bashrc
 COPY paddledet_* /usr/bin/
