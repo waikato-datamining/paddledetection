@@ -71,7 +71,7 @@ def prediction_to_file(predictions, labels, id_: str, path: str, threshold: floa
     :type path: str
     :param threshold: the minimum score for retaining predictions
     :type threshold: float
-    :param mask_nth: to speed polygon detection up, use every nth row and column only (instance segmentation only), use < 1 to turn off polygon calculation
+    :param mask_nth: to speed polygon detection up, use every nth row and column only (instance segmentation only), use < 1 to turn off polygon detection
     :type mask_nth: int
     :return: the file the predictions were saved to
     :rtype: str
@@ -93,7 +93,7 @@ def prediction_to_data(predictions, labels, id_: str, threshold: float = 0.5, ma
     :type id_: str
     :param threshold: the minimum score for retaining predictions
     :type threshold: float
-    :param mask_nth: to speed polygon detection up, use every nth row and column only (instance segmentation only), use < 1 to turn off polygon calculation
+    :param mask_nth: to speed polygon detection up, use every nth row and column only (instance segmentation only), use < 1 to turn off polygon detection
     :type mask_nth: int
     :return: the generated predictions
     :rtype: str

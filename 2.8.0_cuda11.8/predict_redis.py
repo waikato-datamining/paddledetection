@@ -45,7 +45,7 @@ if __name__ == '__main__':
     parser.add_argument('--label_list', help='Path to the file with the comma-separated list of labels to override model-internal ones', required=False, default=None)
     parser.add_argument('--device', help='The device to use', default="gpu")
     parser.add_argument('--threshold', type=float, help='The score threshold for predictions', required=False, default=0.5)
-    parser.add_argument('--mask_nth', type=int, help='To speed polygon detection up, use every nth row and column only; use < 1 to turn off polygon calculation (instance segmentation only)', required=False, default=1)
+    parser.add_argument('--mask_nth', type=int, help='To speed polygon detection up, use every nth row and column only; use < 1 to turn off polygon detection (instance segmentation only)', required=False, default=1)
     parser.add_argument('--verbose', action='store_true', help='Whether to output more logging info', required=False, default=False)
     parsed = parser.parse_args()
 
