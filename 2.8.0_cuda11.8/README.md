@@ -102,10 +102,12 @@ docker build -t paddledetection:2.8.0_cuda11.8 .
 ### Requirements
 
 ```bash
-docker run --rm \
+docker run --rm --pull=always \
   -it public.aml-repo.cms.waikato.ac.nz:443/paddle/paddledetection:2.8.0_cuda11.8 \
   pip freeze > requirements.txt
 ```
+
+**NB:** Ensure that any CUDA preamble has been removed before committing.
 
 
 ## Permissions

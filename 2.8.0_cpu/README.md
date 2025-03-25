@@ -102,7 +102,7 @@ docker build -t paddledetection:2.8.0_cpu .
 ### Requirements
 
 ```bash
-docker run --rm \
+docker run --rm --pull=always \
   -it public.aml-repo.cms.waikato.ac.nz:443/paddle/paddledetection:2.8.0_cpu \
   pip freeze > requirements.txt
 ```
