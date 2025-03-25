@@ -1,11 +1,11 @@
-anyio==4.6.2.post1
+anyio==4.8.0
 archspec @ file:///home/conda/feedstock_root/build_artifacts/archspec_1708969572489/work
 astor==0.8.1
 asttokens @ file:///home/conda/feedstock_root/build_artifacts/asttokens_1698341106958/work
 astunparse==1.6.3
 attrs @ file:///home/conda/feedstock_root/build_artifacts/attrs_1722977137225/work
 babel==2.17.0
-bce-python-sdk==0.9.25
+bce-python-sdk==0.9.29
 beautifulsoup4 @ file:///home/conda/feedstock_root/build_artifacts/beautifulsoup4_1705564648255/work
 blinker==1.9.0
 boltons @ file:///home/conda/feedstock_root/build_artifacts/boltons_1711936407380/work
@@ -24,7 +24,7 @@ conda_index @ file:///home/conda/feedstock_root/build_artifacts/conda-index_1718
 conda_package_streaming @ file:///home/conda/feedstock_root/build_artifacts/conda-package-streaming_1729004031731/work
 contourpy==1.3.1
 cycler==0.12.1
-Cython==3.0.11
+Cython==3.0.12
 decorator @ file:///home/conda/feedstock_root/build_artifacts/decorator_1641555617451/work
 distro @ file:///home/conda/feedstock_root/build_artifacts/distro_1704321475663/work
 dnspython==2.7.0
@@ -42,8 +42,8 @@ future==1.0.0
 h11==0.14.0
 h2 @ file:///home/conda/feedstock_root/build_artifacts/h2_1634280454336/work
 hpack==4.0.0
-httpcore==1.0.6
-httpx==0.27.2
+httpcore==1.0.7
+httpx==0.28.1
 hyperframe @ file:///home/conda/feedstock_root/build_artifacts/hyperframe_1619110129307/work
 hypothesis==6.115.5
 idna @ file:///home/conda/feedstock_root/build_artifacts/idna_1726459485162/work
@@ -69,7 +69,7 @@ lintrunner==0.12.5
 llvmlite==0.44.0
 mamba @ file:///home/conda/feedstock_root/build_artifacts/mamba-split_1727883551957/work/mamba
 MarkupSafe @ file:///home/conda/feedstock_root/build_artifacts/markupsafe_1729351299924/work
-matplotlib==3.10.0
+matplotlib==3.10.1
 matplotlib-inline @ file:///home/conda/feedstock_root/build_artifacts/matplotlib-inline_1713250518406/work
 menuinst @ file:///home/conda/feedstock_root/build_artifacts/menuinst_1725359023560/work
 more-itertools @ file:///home/conda/feedstock_root/build_artifacts/more-itertools_1725630081114/work
@@ -93,7 +93,7 @@ nvidia-nvtx-cu11==11.8.86
 opencv-python==4.5.5.64
 opt-einsum==3.3.0
 optree==0.13.0
-orjson==3.10.15
+orjson==3.10.16
 packaging @ file:///home/conda/feedstock_root/build_artifacts/packaging_1718189413536/work
 -e git+https://github.com/PaddlePaddle/PaddleDetection.git@666f597fd00d3157e84dd9fb2dd3f40bf9918ebc#egg=paddledet
 paddlepaddle-gpu==2.6.2
@@ -107,7 +107,7 @@ pkgutil_resolve_name @ file:///home/conda/feedstock_root/build_artifacts/pkgutil
 platformdirs @ file:///home/conda/feedstock_root/build_artifacts/platformdirs_1726613481435/work
 pluggy @ file:///home/conda/feedstock_root/build_artifacts/pluggy_1713667077545/work
 prompt_toolkit @ file:///home/conda/feedstock_root/build_artifacts/prompt-toolkit_1727341649933/work
-protobuf==5.28.3
+protobuf==5.29.3
 psutil @ file:///home/conda/feedstock_root/build_artifacts/psutil_1729847065645/work
 ptyprocess @ file:///home/conda/feedstock_root/build_artifacts/ptyprocess_1609419310487/work/dist/ptyprocess-0.7.0-py2.py3-none-any.whl
 pure_eval @ file:///home/conda/feedstock_root/build_artifacts/pure_eval_1721585709575/work
@@ -115,9 +115,9 @@ pyclipper==1.3.0.post6
 pycocotools==2.0.8
 pycosat @ file:///home/conda/feedstock_root/build_artifacts/pycosat_1696355758146/work
 pycparser @ file:///home/conda/feedstock_root/build_artifacts/pycparser_1711811537435/work
-pycryptodome==3.21.0
+pycryptodome==3.22.0
 Pygments @ file:///home/conda/feedstock_root/build_artifacts/pygments_1714846767233/work
-pyparsing==3.2.1
+pyparsing==3.2.2
 PySocks @ file:///home/conda/feedstock_root/build_artifacts/pysocks_1661604839144/work
 python-dateutil==2.9.0.post0
 python-etcd==0.4.5
@@ -132,9 +132,9 @@ requests @ file:///home/conda/feedstock_root/build_artifacts/requests_1717057054
 rpds-py @ file:///home/conda/feedstock_root/build_artifacts/rpds-py_1725327039958/work
 ruamel.yaml @ file:///home/conda/feedstock_root/build_artifacts/ruamel.yaml_1728764976564/work
 ruamel.yaml.clib @ file:///home/conda/feedstock_root/build_artifacts/ruamel.yaml.clib_1728724459810/work
-scikit-image==0.25.1
+scikit-image==0.25.2
 scikit-learn==1.6.1
-scipy==1.15.1
+scipy==1.15.2
 shapely==2.0.7
 simple-mask-utils==0.0.1
 simple_file_poller==0.0.13
@@ -146,8 +146,8 @@ soupsieve @ file:///home/conda/feedstock_root/build_artifacts/soupsieve_16939292
 stack-data @ file:///home/conda/feedstock_root/build_artifacts/stack_data_1669632077133/work
 sympy==1.13.1
 terminaltables==3.1.10
-threadpoolctl==3.5.0
-tifffile==2025.1.10
+threadpoolctl==3.6.0
+tifffile==2025.3.13
 torch==2.5.1+cu118
 torchaudio==2.5.1+cu118
 torchelastic==0.2.2
@@ -156,10 +156,10 @@ tqdm @ file:///home/conda/feedstock_root/build_artifacts/tqdm_1722737464726/work
 traitlets @ file:///home/conda/feedstock_root/build_artifacts/traitlets_1713535121073/work
 triton==3.1.0
 truststore @ file:///home/conda/feedstock_root/build_artifacts/truststore_1724770958874/work
-typeguard==4.4.1
+typeguard==4.4.2
 types-dataclasses==0.6.6
 typing_extensions @ file:///home/conda/feedstock_root/build_artifacts/typing_extensions_1717802530399/work
-tzdata==2025.1
+tzdata==2025.2
 urllib3 @ file:///home/conda/feedstock_root/build_artifacts/urllib3_1726496430923/work
 visualdl==2.5.3
 watchdog==6.0.0
