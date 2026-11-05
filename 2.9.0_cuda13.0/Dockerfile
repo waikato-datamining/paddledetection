@@ -30,8 +30,8 @@ RUN git clone https://github.com/PaddlePaddle/PaddleDetection.git && \
     cd PaddleDetection && \
     git reset --hard b25522a0f4bde8c80603f3ba5e3472059972e3b5 && \
     /opt/PaddleDetection.venv/bin/pip install --no-cache-dir -v -e . && \
-    /opt/PaddleSeg.venv/bin/pip install --no-cache-dir -U "numpy<2.0.0" "scipy==1.15.3" && \
-    /opt/PaddleSeg.venv/bin/pip install --no-cache-dir -U https://paddle-whl.bj.bcebos.com/nightly/cu126/safetensors/safetensors-0.6.2.dev0-cp38-abi3-linux_x86_64.whl
+    /opt/PaddleDetection.venv/bin/pip install --no-cache-dir -U "numpy<2.0.0" "scipy==1.15.3" && \
+    /opt/PaddleDetection.venv/bin/pip install --no-cache-dir -U https://paddle-whl.bj.bcebos.com/nightly/cu126/safetensors/safetensors-0.6.2.dev0-cp38-abi3-linux_x86_64.whl
 
 RUN /opt/PaddleDetection.venv/bin/pip install --no-cache-dir \
         numba==0.61.0 \
