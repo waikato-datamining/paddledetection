@@ -1,3 +1,0 @@
-#!/bin/bash
-
-/opt/PaddleDetection.venv/bin/python3 /opt/PaddleDetection/tools/train.py "$@"
