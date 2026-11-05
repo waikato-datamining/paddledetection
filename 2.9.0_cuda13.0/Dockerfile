@@ -9,7 +9,7 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN python3 -m venv --system-site-packages /opt/PaddleClas.venv
+RUN python3 -m venv --system-site-packages /opt/PaddleDetection.venv
 
 # see instructions for specific cuda version
 # https://www.paddlepaddle.org.cn/documentation/docs/en/install/pip/linux-pip_en.html#choose-cpu-gpu
